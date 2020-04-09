@@ -1,3 +1,1 @@
-const http = require('http');
-
-http.createServer((req, res) => {}).listen(5050);
+const module1 = require('./module');
