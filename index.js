@@ -1,38 +1,65 @@
 const express = require('express');
 const app = express();
-const router = require('./router');
-const products = ['mongo', 'express', 'react', 'nodejs'];
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const config = require('./config/config');
 
-app.get('/', (req, res) => res.send('It works'));
-app.get('/products', (req, res) => res.json({ products }));
-app.get('/products', req => console.log(`Page: ${req.query.page}`));
-app.get('/products/:id', (req, res) => res.json(products[req.params.id]));
+let users = [];
+let messages = [];
 
-app.use('/books', router);
-
-// app.set('view engine', 'pug'); // pug
-// app.set('view engine', 'ejs'); // ejs
-app.set('view engine', 'hbs'); // hbs
-app.set('views', './views');
-
-/* pug */
-// app.get('/pug', (req, res, next) => {
-//   res.render('main', { title: 'Pug template', message: 'Hello world!', products: products });
-// });
-
-/* ejs */
-// app.get('/ejs', (req, res, next) => {
-//   res.render('main', { title: 'EJS template', message: 'Hello world!', products: products });
-// });
-
-/* hbs */
-app.get('/hbs', (req, res, next) => {
-  res.render('main', { title: 'Handlebars template', message: 'Hello world!', products: products });
+app.use(express.static(__dirname + '/public'));
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
 });
 
-app.listen(3030, () => {
+io.on('connection', socket => {
+  socket.on('login', data => {
+    const isUserExist = users.find(user => user === data);
+
+    if (!isUserExist) {
+      if (data.length < 4) return io.sockets.emit('login', { status: 'Nickname must have from 4 to 10 characters.' });
+
+      users.push(data);
+      socket.nickname = data;
+
+      io.sockets.emit('users', users);
+      return io.sockets.emit('login', { nickname: data, status: 'OK', messages });
+    } else {
+      return io.sockets.emit('login', { status: `Nickname "${data}" is not available.` });
+    }
+  });
+
+  socket.on('sendMessage', data => {
+    const date = new Date();
+
+    let message = {
+      nickname: socket.nickname,
+      message: data,
+      time: `${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${
+        date.getMinutes() < 10 ? '0' : ''
+      }${date.getMinutes()} ${date.getDate() < 10 ? '0' : ''}${date.getDate()}.${
+        date.getMonth() < 10 ? '0' : ''
+      }${date.getMonth()}`,
+    };
+
+    messages.push(message);
+
+    io.sockets.emit('newMessage', message);
+  });
+
+  socket.on('disconnect', () => {
+    users = users.filter(user => user !== socket.nickname);
+    io.sockets.emit('users', users);
+  });
+});
+
+server.listen(process.env.PORT || config.port, () => {
   const date = new Date();
   console.log(
-    `It works. ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`
+    `It works on port ${process.env.PORT || config.port}. ${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${
+      date.getMinutes() < 10 ? '0' : ''
+    }${date.getMinutes()}:${date.getSeconds() < 10 ? '0' : ''}${date.getSeconds()} ${
+      date.getDate() < 10 ? '0' : ''
+    }${date.getDate()}.${date.getMonth() < 10 ? '0' : ''}${date.getMonth()}.${date.getFullYear()}`
   );
 });
