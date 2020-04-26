@@ -4,7 +4,8 @@
   "description": "Socket.io express server",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon --inspect index.js",
+    "start-server": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -33,12 +34,10 @@
   },
   "homepage": "https://github.com/BohdanK911/node-course#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "ejs": "^3.0.2",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "hbs": "^4.1.1",
-    "pug": "^2.0.4",
-    "socket.io": "^2.3.0",
-    "uuid": "^7.0.3"
+    "mongoose": "^5.9.10",
+    "shortid": "^2.2.15"
   }
 }

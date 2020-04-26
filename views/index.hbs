@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Short link service</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <form id="short-link-form">
+    <input type="text" name="short-link" placeholder="Enter your link" id="short-link" autocomplete="off">
+    <small class="error"></small>
+    <button type="submit">Short link</button>
+  </form>
+  <strong>Recently added links</strong>
+  <div class="container-table100">
+    <div class="wrap-table100">
+      <div id="list" class="table">
+        <div class="row header">
+          <div class="cell">Short link</div>
+          <div class="cell">Original link</div>
+        </div>
+        {{#each links}}
+          <div class="row">
+            <div class="cell" data-title="Short link"><a href={{short}} target="_blank" rel="norefferer noopener">{{short}}</a></div>
+            <div class="cell" data-title="Source link"><a href={{source}} target="_blank" rel="norefferer noopener">{{source}}</a></div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <script src="js/index.js"></script>
+</body>
+</html>

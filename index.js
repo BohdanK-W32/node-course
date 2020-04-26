@@ -1,65 +1,35 @@
+require('dotenv').config();
+
 const express = require('express');
+const http = require('http');
+const path = require('path');
 const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
 const config = require('./config/config');
+const connectDb = require('./config/db');
+const defaultRoutes = require('./routes');
 
-let users = [];
-let messages = [];
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded());
+app.use(express.json());
 
-app.use(express.static(__dirname + '/public'));
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
+app.set('view engine', 'hbs');
+app.set('views', 'views');
 
-io.on('connection', socket => {
-  socket.on('login', data => {
-    const isUserExist = users.find(user => user === data);
+app.use(defaultRoutes);
 
-    if (!isUserExist) {
-      if (data.length < 4) return io.sockets.emit('login', { status: 'Nickname must have from 4 to 10 characters.' });
+connectDb()
+  .then(() => {
+    app.listen(config.port, () => {
+      const date = new Date();
+      console.log(
+        `It works on port ${process.env.PORT || config.port}. ${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${
+          date.getMinutes() < 10 ? '0' : ''
+        }${date.getMinutes()}:${date.getSeconds() < 10 ? '0' : ''}${date.getSeconds()} ${
+          date.getDate() < 10 ? '0' : ''
+        }${date.getDate()}.${date.getMonth() < 10 ? '0' : ''}${date.getMonth()}.${date.getFullYear()}`
+      );
+    });
+  })
+  .catch(err => console.error(err));
 
-      users.push(data);
-      socket.nickname = data;
-
-      io.sockets.emit('users', users);
-      return io.sockets.emit('login', { nickname: data, status: 'OK', messages });
-    } else {
-      return io.sockets.emit('login', { status: `Nickname "${data}" is not available.` });
-    }
-  });
-
-  socket.on('sendMessage', data => {
-    const date = new Date();
-
-    let message = {
-      nickname: socket.nickname,
-      message: data,
-      time: `${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${
-        date.getMinutes() < 10 ? '0' : ''
-      }${date.getMinutes()} ${date.getDate() < 10 ? '0' : ''}${date.getDate()}.${
-        date.getMonth() < 10 ? '0' : ''
-      }${date.getMonth()}`,
-    };
-
-    messages.push(message);
-
-    io.sockets.emit('newMessage', message);
-  });
-
-  socket.on('disconnect', () => {
-    users = users.filter(user => user !== socket.nickname);
-    io.sockets.emit('users', users);
-  });
-});
-
-server.listen(process.env.PORT || config.port, () => {
-  const date = new Date();
-  console.log(
-    `It works on port ${process.env.PORT || config.port}. ${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${
-      date.getMinutes() < 10 ? '0' : ''
-    }${date.getMinutes()}:${date.getSeconds() < 10 ? '0' : ''}${date.getSeconds()} ${
-      date.getDate() < 10 ? '0' : ''
-    }${date.getDate()}.${date.getMonth() < 10 ? '0' : ''}${date.getMonth()}.${date.getFullYear()}`
-  );
-});
+setInterval(() => http.get(`http://${process.env.DOMAIN_NAME}`), 180000);
