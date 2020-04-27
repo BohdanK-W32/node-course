@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const http = require('http');
 const path = require('path');
 const app = express();
@@ -9,8 +10,8 @@ const connectDb = require('./config/db');
 const defaultRoutes = require('./routes');
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded());
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.set('view engine', 'hbs');
 app.set('views', 'views');
