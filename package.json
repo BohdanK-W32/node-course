@@ -25,12 +25,12 @@
   },
   "homepage": "https://github.com/BohdanK911/node-course#readme",
   "scripts": {
-    "start": "PORT=3030 nodemon --inspect ./bin/www",
-    "start:brk": "PORT=3030 nodemon --inspect-brk ./bin/www"
+    "start": "PORT=3030 nodemon ./bin/www",
+    "start:server1": "PORT=3031 nodemon ./server1/index.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
-    "cookie-parser": "~1.4.4",
+    "cookie-parser": "^1.4.5",
     "debug": "~2.6.9",
     "express": "^4.17.1",
     "morgan": "~1.9.1",

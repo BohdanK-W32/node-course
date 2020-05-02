@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const uuid = require('uuid/v4');
+const { v4: uuid } = require('uuid');
 
 let books = [{ id: uuid(), author: 'Bohdan Kucheriavyi', title: 'Node.js' }];
 const findBook = id => books.find(book => book.id == id);
