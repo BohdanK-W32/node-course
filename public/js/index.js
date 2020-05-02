@@ -4,11 +4,8 @@ const formInput = document.querySelector('#short-link');
 form.addEventListener('submit', e => {
   e.preventDefault();
 
-  const checkLink = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
   const errorElement = document.querySelector('.error');
   const data = { link: formInput.value };
-
-  if (!checkLink.test(formInput.value)) return (errorElement.innerText = 'Invalid link');
 
   errorElement.innerText = '';
 
