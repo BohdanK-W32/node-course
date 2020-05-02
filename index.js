@@ -23,7 +23,7 @@ connectDb()
     app.listen(config.port, () => {
       const date = new Date();
       console.log(
-        `It works on port ${process.env.PORT || config.port}. ${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${
+        `It works on port ${config.port}. ${date.getHours() < 10 ? '0' : ''}${date.getHours()}:${
           date.getMinutes() < 10 ? '0' : ''
         }${date.getMinutes()}:${date.getSeconds() < 10 ? '0' : ''}${date.getSeconds()} ${
           date.getDate() < 10 ? '0' : ''
