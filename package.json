@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/BohdanK911/node-course#readme",
   "engines": {
-    "node": "12.x"
+    "node": "12.16.2"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
