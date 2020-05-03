@@ -1,6 +1,0 @@
-{
-  "projects": {
-    "default": "telegram-bot-w32",
-    "staging": "telegram-bot-w32"
-  }
-}

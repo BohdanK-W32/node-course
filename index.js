@@ -1,12 +1,13 @@
-const functions = require('firebase-functions');
-const config = functions.config();
 const axios = require('axios');
+const dotenv = require('dotenv');
 const { Telegraf, Extra } = require('telegraf');
 
-const bot = new Telegraf(config.telegram.token);
+dotenv.config();
+
+const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 const darkSkyUrl = ({ lat, lng, lang = 'en', units = 'si' }) =>
-  `https://api.darksky.net/forecast/${config.darksky.key}/${lat},${lng}?lang=${lang}&units=${units}`;
+  `https://api.darksky.net/forecast/${process.env.DARK_SKY_API_KEY}/${lat},${lng}?lang=${lang}&units=${units}`;
 
 bot.start(({ reply, chat }) =>
   reply(
@@ -34,5 +35,3 @@ bot.on('location', ({ reply, message }) => {
 });
 
 bot.launch();
-
-exports.helloWorld = functions.https.onRequest((req, res) => res.send('Hello from Firebase!'));

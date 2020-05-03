@@ -1,0 +1,19 @@
+{
+  "name": "w32-weather-telegram-bot",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "engines": {
+    "node": "12"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "telegraf": "^3.38.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-plugin-promise": "^4.0.1"
+  },
+  "private": true
+}
