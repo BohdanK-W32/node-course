@@ -1,0 +1,6 @@
+{
+  "hello": "Привіт, ${name}! \nНадішліть мені будь-яке місцезнаходження щоб отримати дані про погоду.",
+  "lang_changed": "Мову успішно змінено",
+  "send_location_btn": "📍 Надіслати місцезнаходження",
+  "weather_message": "<b>Зараз</b>\n\n${currently.summary}\nТемпература: ${Number(currently.temperature).toFixed(1)} °${flags.units === 'si' ? 'C' : 'F'} (відчувається як ${Number(currently.apparentTemperature).toFixed(1)} °${flags.units === 'si' ? 'C' : 'F'})\nШвидкість вітру: ${Number(currently.windSpeed).toFixed(1)} м/с"
+}
