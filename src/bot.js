@@ -3,6 +3,7 @@ const { Telegraf, Extra } = require('telegraf');
 const TelegrafI18n = require('telegraf-i18n');
 const UserModel = require('./models/user');
 const fetchWeather = require('./config/fetchWeather');
+const config = require('./config/config');
 const bot = new Telegraf(process.env.TELEGRAM_WEATHER_BOT_TOKEN);
 const EN_LANG = 'en',
   UA_LANG = 'uk',
@@ -66,7 +67,15 @@ const locationMenu = text => {
 const changeLangMessage = async replyMethod =>
   await replyMethod('Choose your language / оберіть мову / выберите язык', langMenu);
 
+//
 // Bot start
+//
+
+if (process.env.HEROKU) {
+  bot.telegram.setWebhook(`${TELEGRAM_WEATHER_BOT_WEBHOOK}/${TELEGRAM_WEATHER_BOT_TOKEN}`);
+  bot.startWebhook(`/bot${TELEGRAM_WEATHER_BOT_TOKEN}`, null, config.port);
+  app.use(bot.webhookCallback(`/${process.env.TELEGRAM_WEATHER_BOT_TOKEN}`));
+}
 
 bot.use(I18n.middleware());
 bot.use(Telegraf.session());
