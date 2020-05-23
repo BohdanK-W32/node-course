@@ -8,8 +8,8 @@ const bot = require('./bot');
 db();
 
 if (process.env.HEROKU) {
-  app.use(bot.webhookCallback('/webhook'));
-  bot.telegram.setWebhook(`${process.env.TELEGRAM_WEATHER_BOT_WEBHOOK}/webhook`);
+  app.use(bot.webhookCallback(`/${process.env.TELEGRAM_WEATHER_BOT_TOKEN}`));
+  bot.telegram.setWebhook(`${process.env.TELEGRAM_WEATHER_BOT_WEBHOOK}/${process.env.TELEGRAM_WEATHER_BOT_TOKEN}`);
 }
 bot.launch();
 
