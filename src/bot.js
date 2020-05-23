@@ -81,11 +81,7 @@ bot.action(EN_LANG, langSelect);
 bot.action(UA_LANG, langSelect);
 bot.action(RU_LANG, langSelect);
 
-bot.command('/changelang', async ({ reply }, next) => {
-  await changeLangMessage(reply);
-
-  return next();
-});
+bot.command('changelang', ({ reply }) => changeLangMessage(reply));
 
 bot.on('location', async ({ i18n, reply, from, message }) => {
   const { latitude: lat, longitude: lng } = message.location;
