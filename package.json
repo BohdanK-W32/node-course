@@ -1,7 +1,7 @@
 {
   "name": "w32-weather-telegram-bot",
   "scripts": {
-    "start": "forever src/index.js"
+    "start": "node src/index.js"
   },
   "engines": {
     "node": "12"
