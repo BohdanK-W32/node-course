@@ -12,4 +12,4 @@ if (process.env.HEROKU) app.use(bot.webhookCallback(`/${process.env.TELEGRAM_WEA
 bot.launch();
 
 app.all('*', (req, res) => res.send('Ok, so what?').status(200).end());
-app.listen(port, () => console.log('Ok, we are on ' + port + ' port'));
+// app.listen(port, () => console.log('Ok, we are on ' + port + ' port'));
