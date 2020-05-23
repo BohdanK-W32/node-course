@@ -74,7 +74,6 @@ const changeLangMessage = async replyMethod =>
 if (process.env.HEROKU) {
   bot.telegram.setWebhook(`${process.env.TELEGRAM_WEATHER_BOT_WEBHOOK}/${process.env.TELEGRAM_WEATHER_BOT_TOKEN}`);
   bot.startWebhook(`/bot${process.env.TELEGRAM_WEATHER_BOT_TOKEN}`, null, config.port);
-  app.use(bot.webhookCallback(`/${process.env.TELEGRAM_WEATHER_BOT_TOKEN}`));
 }
 
 bot.use(I18n.middleware());
