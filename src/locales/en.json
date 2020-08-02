@@ -2,5 +2,13 @@
   "hello": "Hello, ${name}! \nSend me any location to get wewather data.",
   "lang_changed": "Language changed successfully",
   "send_location_btn": "📍 Send location",
-  "weather_message": "<b>Currently</b>\n\n${currently.summary}\nTemperature: ${Number(currently.temperature).toFixed(1)} °${flags.units === 'si' ? 'C' : 'F'} (feels like ${Number(currently.apparentTemperature).toFixed(1)} °${flags.units === 'si' ? 'C' : 'F'})\nWind speed: ${Number(currently.windSpeed).toFixed(1)} m/s"
+  "weather_message_currently": "<b>Currently</b>\n\n${summary} ${icon}\n\nTemperature: ${Number(temperature).toFixed(1)}°C (feels like ${Number(apparentTemperature).toFixed(1)}°C)\nWind speed: ${Number(windSpeed).toFixed(1)} m/s\n\n\n",
+  "weather_message_today": "<b>Today</b>\n\n${summary} ${icon}\nSunrise time: ${sunriseTime}\nSunset time: ${sunsetTime}\n\n<pre>Time   Temp. Wind     Precip (probability)</pre>\n${data}\n\n\n",
+  "weather_message_tomorrow": "<b>Tomorrow</b>\n\n${summary} ${icon}\nSunrise time: ${sunriseTime}\nSunset time: ${sunsetTime}\n\n<pre>Time   Temp. Wind     Precip (probability)</pre>\n${data}\n\n\n",
+  "weather_message_date": "<b>${date}</b>\n\n${summary} ${icon}\n\n${data}\n\n\n",
+  "owner_get_db_failed": "DB request error",
+  "owner_send_success": "Message send successfully",
+  "owner_moderation": "Message from ${name} (${id}): ",
+  "moderation": "Your message on moderation",
+  "coordinates_syntax_error": "Coordinates syntax is invalid. \nValid syntax is (latitiude,longitude): \n12.3456,12.3456 \n12.34567,12.34567 \n12.345678,12.345678"
 }

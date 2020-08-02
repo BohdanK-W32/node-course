@@ -2,5 +2,13 @@
   "hello": "Привет, ${name}! \nОтправь мне любое местоположение чтобы получить данные о погоде.",
   "lang_changed": "Язык успешно изменен",
   "send_location_btn": "📍 Отправить местоположение",
-  "weather_message": "<b>Сейчас</b>\n\n${currently.summary}\nТемпература: ${Number(currently.temperature).toFixed(1)} °${flags.units === 'si' ? 'C' : 'F'} (ощущается как ${Number(currently.apparentTemperature).toFixed(1)} °${flags.units === 'si' ? 'C' : 'F'})\nСкорость ветра: ${Number(currently.windSpeed).toFixed(1)} м/с"
+  "weather_message_currently": "<b>Сейчас</b>\n\n${summary} ${icon}\n\nТемпература: ${Number(temperature).toFixed(1)}°C (ощущается как ${Number(apparentTemperature).toFixed(1)}°C)\nСкорость ветра: ${Number(windSpeed).toFixed(1)} м/с\n\n\n",
+  "weather_message_today": "<b>Сегодня</b>\n\n${summary} ${icon}\nВремя восхода солнца: ${sunriseTime}\nВремя заката солнца: ${sunsetTime}\n\n<pre>Время  Темп. Ветер    Осадки (вероятность)</pre>\n${data}\n\n\n",
+  "weather_message_tomorrow": "<b>Завтра</b>\n\n${summary} ${icon}\nВремя восхода солнца: ${sunriseTime}\nВремя заката солнца: ${sunsetTime}\n\n<pre>Время  Темп. Ветер    Осадки (вероятность)</pre>\n${data}\n\n\n",
+  "weather_message_date": "<b>${date}</b>\n\n${summary} ${icon}\n\n${data}\n\n\n",
+  "owner_get_db_failed": "Ошибка запроса базы данных",
+  "owner_send_success": "Сообщение успешно отправлено",
+  "owner_moderation": "Сообщение от ${name} (${id}): ",
+  "moderation": "Ваше сообщение на модерации",
+  "coordinates_syntax_error": "Ошибка синтаксиса. \nВалидные варианты синтаксиса (широта,долгота): \n12.3456,12.3456 \n12.34567,12.34567 \n12.345678,12.345678"
 }
