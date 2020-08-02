@@ -1,0 +1,15 @@
+{
+  "clear-day": "☀️",
+  "clear-night": "🌃",
+  "partly-cloudy-day": "🌥️",
+  "partly-cloudy-night": "🌃",
+  "thunderstorm": "⛈️",
+  "tornado": "🌪️",
+  "cloudy": "☁️",
+  "sleet": "🌨️",
+  "rain": "🌧️",
+  "wind": "💨",
+  "snow": "🌨️",
+  "hail": "⛈️",
+  "fog": "🌁"
+}
