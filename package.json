@@ -1,7 +1,7 @@
 {
   "name": "w32-weather-telegram-bot",
   "scripts": {
-    "start": "forever src/index.js"
+    "start": "node src/index.js"
   },
   "engines": {
     "node": "12"
@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "moment": "^2.26.0",
     "mongoose": "^5.9.14",
     "telegraf": "^3.38.0",
     "telegraf-i18n": "^6.6.0"
