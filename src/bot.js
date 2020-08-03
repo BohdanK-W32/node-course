@@ -56,7 +56,7 @@ const langSelect = async ({ i18n, reply, from, chat, match }, next) => {
   return next();
 };
 
-const getHourlyWeatherString = data => {
+const getHourlyWeatherString = ({data, timezone}) => {
   let weatherString = '';
   const timeString = time => moment.unix(time).format('HH:mm');
   data.map(({ temperature, time, windSpeed, precipIntensity, precipProbability }) => {
@@ -168,14 +168,14 @@ bot.command('coordinates', async ({ i18n, reply, from, message }) => {
       sunriseTime: timeString(res.daily.data[0].sunriseTime),
       sunsetTime: timeString(res.daily.data[0].sunsetTime),
       icon: icons[res.daily.data[0].icon],
-      data: getHourlyWeatherString(filterTodayHourly(res.hourly.data)),
+      data: getHourlyWeatherString(filterTodayHourly({ data: res.hourly.data, timezone: res.timezone })),
     };
     const tomorrow = {
       summary: res.daily.data[1].summary,
       sunriseTime: timeString(res.daily.data[1].sunriseTime),
       sunsetTime: timeString(res.daily.data[1].sunsetTime),
       icon: icons[res.daily.data[1].icon],
-      data: getHourlyWeatherString(filterTomorrowHourly(res.hourly.data)),
+      data: getHourlyWeatherString(filterTomorrowHourly({ data: res.hourly.data, timezone: res.timezone })),
     };
 
     const weatherString = `${i18n.t('weather_message_currently', currently)}${
