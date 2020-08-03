@@ -206,17 +206,23 @@ bot.on('location', async ({ i18n, reply, from, message }) => {
     const currently = { ...res.currently, icon: icons[res.currently.icon] };
     const today = {
       summary: res.daily.data[0].summary,
-      sunriseTime: timeString(res.daily.data[0].sunriseTime),
-      sunsetTime: timeString(res.daily.data[0].sunsetTime),
+      sunriseTime: timeString({ time: res.daily.data[0].sunriseTime, timezone: res.timezone }),
+      sunsetTime: timeString({ time: res.daily.data[0].sunsetTime, timezone: res.timezone }),
       icon: icons[res.daily.data[0].icon],
-      data: getHourlyWeatherString(filterTodayHourly(res.hourly.data)),
+      data: getHourlyWeatherString({
+        data: filterTodayHourly({ data: res.hourly.data, timezone: res.timezone }),
+        timezone: res.timezone,
+      }),
     };
     const tomorrow = {
       summary: res.daily.data[1].summary,
       sunriseTime: timeString(res.daily.data[1].sunriseTime),
       sunsetTime: timeString(res.daily.data[1].sunsetTime),
       icon: icons[res.daily.data[1].icon],
-      data: getHourlyWeatherString(filterTomorrowHourly(res.hourly.data)),
+      data: getHourlyWeatherString({
+        data: filterTomorrowHourly({ data: res.hourly.data, timezone: res.timezone }),
+        timezone: res.timezone,
+      }),
     };
 
     const weatherString = `${i18n.t('weather_message_currently', currently)}${
