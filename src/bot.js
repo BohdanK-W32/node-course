@@ -216,8 +216,8 @@ bot.on('location', async ({ i18n, reply, from, message }) => {
     };
     const tomorrow = {
       summary: res.daily.data[1].summary,
-      sunriseTime: timeString(res.daily.data[1].sunriseTime),
-      sunsetTime: timeString(res.daily.data[1].sunsetTime),
+      sunriseTime: timeString({ time: res.daily.data[1].sunriseTime, timezone: res.timezone }),
+      sunsetTime: timeString({ time: res.daily.data[1].sunsetTime, timezone: res.timezone }),
       icon: icons[res.daily.data[1].icon],
       data: getHourlyWeatherString({
         data: filterTomorrowHourly({ data: res.hourly.data, timezone: res.timezone }),
