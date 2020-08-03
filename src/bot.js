@@ -1,5 +1,5 @@
 const path = require('path');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const { Telegraf, Extra } = require('telegraf');
 const TelegrafI18n = require('telegraf-i18n');
 const UserModel = require('./models/user');
@@ -56,9 +56,9 @@ const langSelect = async ({ i18n, reply, from, chat, match }, next) => {
   return next();
 };
 
-const getHourlyWeatherString = ({data, timezone}) => {
+const getHourlyWeatherString = ({ data, timezone }) => {
   let weatherString = '';
-  const timeString = time => moment.unix(time).format('HH:mm');
+  const timeString = time => moment.unix(time).tz(timezone).format('HH:mm');
   data.map(({ temperature, time, windSpeed, precipIntensity, precipProbability }) => {
     const temp = Math.round(temperature);
     weatherString += `<pre>${timeString(time)}  ${temp}°C ${temp < 10 ? ' ' : ''} ${windSpeed.toFixed(
@@ -69,7 +69,7 @@ const getHourlyWeatherString = ({data, timezone}) => {
   return weatherString;
 };
 
-const timeString = time => moment.unix(time).format('HH:mm');
+const timeString = ({ time, timezone }) => moment.unix(time).tz(timezone).format('HH:mm');
 const getDateString = (date, lang, format) => moment.unix(date).locale(lang).format(format);
 
 const langMenu = Extra.markdown().markup(m =>
@@ -165,17 +165,23 @@ bot.command('coordinates', async ({ i18n, reply, from, message }) => {
     const currently = { ...res.currently, icon: icons[res.currently.icon] };
     const today = {
       summary: res.daily.data[0].summary,
-      sunriseTime: timeString(res.daily.data[0].sunriseTime),
-      sunsetTime: timeString(res.daily.data[0].sunsetTime),
+      sunriseTime: timeString({ time: res.daily.data[0].sunriseTime, timezone: res.timezone }),
+      sunsetTime: timeString({ time: res.daily.data[0].sunsetTime, timezone: res.timezone }),
       icon: icons[res.daily.data[0].icon],
-      data: getHourlyWeatherString(filterTodayHourly({ data: res.hourly.data, timezone: res.timezone })),
+      data: getHourlyWeatherString({
+        data: filterTodayHourly({ data: res.hourly.data, timezone: res.timezone }),
+        timezone: res.timezone,
+      }),
     };
     const tomorrow = {
       summary: res.daily.data[1].summary,
-      sunriseTime: timeString(res.daily.data[1].sunriseTime),
-      sunsetTime: timeString(res.daily.data[1].sunsetTime),
+      sunriseTime: timeString({ time: res.daily.data[1].sunriseTime, timezone: res.timezone }),
+      sunsetTime: timeString({ time: res.daily.data[1].sunsetTime, timezone: res.timezone }),
       icon: icons[res.daily.data[1].icon],
-      data: getHourlyWeatherString(filterTomorrowHourly({ data: res.hourly.data, timezone: res.timezone })),
+      data: getHourlyWeatherString({
+        data: filterTomorrowHourly({ data: res.hourly.data, timezone: res.timezone }),
+        timezone: res.timezone,
+      }),
     };
 
     const weatherString = `${i18n.t('weather_message_currently', currently)}${
